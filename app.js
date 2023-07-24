@@ -1,7 +1,15 @@
 const express = require("express");
 const app = express()
+const RouterRoot = require("./src/routers/rootRoutes");
+const db = require("./src/app/db/index");
+
+
+db.connect()
 
 const port = 3001;
+
+RouterRoot(app);
+
 app.listen(port, () => {
     const start = async () => {
         try {
