@@ -4,10 +4,10 @@ const config = require('../config/config.json');
 
 const sequelize = new Sequelize(config?.mysql.database, config.mysql.user, config.mysql.password, {
     ...config,
-    host: config?.mysqlSSO?.host || '127.0.0.1',
-    port: config?.mysqlSSO?.port || 3306,
+    host: config?.mysql?.host || '127.0.0.1',
+    port: config?.mysql?.port || 3306,
     dialect: 'mysql',
-    logging: config?.mysqlSSO?.logging || false,
+    logging: config?.mysql?.logging || false,
 });
 
 async function connectMysql(){
@@ -25,19 +25,19 @@ async function connectMysql(){
 async function initDatabaseMysql() {
     return new Promise((resolve, reject) => {
         const connection = mysql.createConnection({
-          host: config?.mysqlSSO?.host,
-          user: config?.mysqlSSO?.user,
-          password: config?.mysqlSSO?.password,
+          host: config?.mysql?.host,
+          user: config?.mysql?.user,
+          password: config?.mysql?.password,
         });
         connection.query(
-          `CREATE DATABASE IF NOT EXISTS ${config?.mysqlSSO?.database} CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci`,
+          `CREATE DATABASE IF NOT EXISTS ${config?.mysql?.database} CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci`,
           (error, results) => {
             connection.destroy();
             if (error) {
-              console.log(`Init mysql database ${config?.mysqlSSO?.database} failed: ${error?.message || JSON.stringify(error)}`);
+              console.log(`Init mysql database ${config?.mysql?.database} failed: ${error?.message || JSON.stringify(error)}`);
               return reject(error);
             }
-            console.log(`Init mysql database ${config?.mysqlSSO?.database} successfully: ${JSON.stringify({results})}`);
+            console.log(`Init mysql database ${config?.mysql?.database} successfully: ${JSON.stringify({results})}`);
             return resolve();
           }
         );

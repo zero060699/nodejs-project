@@ -1,6 +1,6 @@
 {
     "mongoDB": {
-        "host": "10.2.32.31",
+        "host": "localhost",
         "port": 27017
     },
     
@@ -8,8 +8,8 @@
        "host": "localhost",
        "port": 3306,
        "user": "root",
-       "password": "123456a@A",
-       "database": "sso",
+       "password": "Bkav@2023",
+       "database": "test",
        "logging": false
     }
 }
