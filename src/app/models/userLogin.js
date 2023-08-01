@@ -39,3 +39,5 @@ const UserLogin = sequelize.define(
         }
     }
 )
+
+module.exports = UserLogin;
