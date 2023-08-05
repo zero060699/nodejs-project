@@ -8,6 +8,8 @@
   "license": "MIT",
   "dependencies": {
     "bcrypt": "^5.1.0",
+    "body-parser": "^1.20.2",
+    "cors": "^2.8.5",
     "crypto": "^1.0.1",
     "crypto-js": "^4.1.1",
     "dotenv": "^16.3.1",
@@ -15,6 +17,7 @@
     "lodash": "^4.17.21",
     "moment": "^2.29.4",
     "mongoose": "^7.4.0",
+    "morgan": "^1.10.0",
     "mysql": "^2.18.1",
     "mysql2": "^3.5.2",
     "nodemon": "^3.0.1",

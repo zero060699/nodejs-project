@@ -115,8 +115,9 @@ jsonassigns = (code, message, data) => {
   };
 };
 
-jsonconfig = (data) => {
+jsonconfig = (message, data) => {
   return {
+    message: message,
     data: data,
   };
 };
