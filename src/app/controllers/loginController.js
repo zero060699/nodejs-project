@@ -22,8 +22,17 @@ class loginController {
 
     async getUser(req, res) {
         try {
-            const result = await loginService.getUser();
-            responseUtil.success200(res, jsonInstance.jsonconfig("Get user success", result));
+            const responses = {
+                search: req.body.search,
+                page: req.body.page,
+                size: req.body.size
+            }
+            const result = await loginService.getUser(
+                responses.search,
+                responses.page,
+                responses.size
+            );
+            responseUtil.success200(res, jsonInstance.toJsonWithData("Get user success", result));
         } catch (error) {
             responseUtil.error400(res, jsonInstance.jsonNoData(error.message))
         }
