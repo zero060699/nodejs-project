@@ -37,6 +37,22 @@ class loginController {
             responseUtil.error400(res, jsonInstance.jsonNoData(error.message))
         }
     }
+
+    async Login(req, res) {
+        try {
+            const responses = {
+                user: req.body.user,
+                passaword: req.body.password
+            }
+            const result = await loginService.login(
+                responses.user,
+                responses.passaword
+            );
+            responseUtil.success200(res, jsonInstance.jsonconfig("Login successfully", result));
+        } catch (error) {
+            responseUtil.error400(res, jsonInstance.jsondata(error.message))
+        }
+    }
 }
 
 module.exports = new loginController();

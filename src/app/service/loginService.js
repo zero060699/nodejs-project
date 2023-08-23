@@ -71,8 +71,9 @@ class loginService {
   }
 
   async login(username, password) {
-    const secretKey = crypto.randomBytes(32).toString('hex');
-    const refreshSecretKey = crypto.randomBytes(32).toString('hex');
+    const {privateKey, publicKey} = crypto.generateKeyPairSync('rsa', {
+      modulusLength: 4096
+    })
     return new Promise(async (resolve, reject) => {
       try {
         const result = await dataLogin.findOne({
@@ -84,7 +85,10 @@ class loginService {
           return reject(new Error("Invalid username or password"))
         }
         if (bcrypt.compareSync(password, result.password)) {
-          return resolve(secretKey, refreshSecretKey)
+          const accessToken = jwt.sign({userId: result.id}, privateKey, {algorithm:'RS256', expiresIn: '15s'});
+          const resfreshToken = jwt.sign({userId: result.id}, privateKey, {algorithm:'RS256', expiresIn: '120s'})
+          const publicToken = jwt.sign({userId: result.id}, publicKey, {algorithm:'RS256', expiresIn: '1h'})
+          return resolve({accessToken, resfreshToken, publicToken})
         }else{
           return reject(new Error("Invalid username or password"))
         }
@@ -92,6 +96,25 @@ class loginService {
         throw Error(error.message)
       }
     })
+  }
+
+  async token(refreshToken, username) {
+    try {
+      const refreshTokens = {}
+      if(refreshToken && (refreshToken in refreshTokens)) {
+        const user = await dataLogin.findOne({
+          where: {
+            user: username
+          }
+        })
+        const token = jwt.sign({userId: result.id}, secretKey, {expiresIn: '15s'})
+        refreshTokens[refreshToken] = token
+      } else {
+        throw new Error("Invalid request")
+      }
+    } catch (error) {
+      throw Error(error.message)
+    }
   }
 }
 
